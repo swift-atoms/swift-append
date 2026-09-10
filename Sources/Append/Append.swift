@@ -1,16 +1,3 @@
-/// An operation that appends a value to an accumulated value.
-///
-/// The result may have a different type from either operand. For example,
-/// appending to a heterogeneous tuple increases its arity, while appending
-/// an element to an array preserves the array type.
-///
-/// Unlike a semigroup operation, append need not be closed over one type.
-/// This witness does not impose associativity or an identity element.
-/// Use `Failure == Never` for an operation that cannot fail.
-///
-/// A nonescapable result inherits both operands' lifetime dependencies and
-/// may also borrow from the stored operation's captures. The witness itself
-/// remains escapable; its escaping operation cannot capture scoped values.
 @frozen
 public struct Append<
     Accumulated: ~Copyable & ~Escapable,
@@ -30,7 +17,6 @@ public struct Append<
         self.appending = appending
     }
 
-    /// Transfers both operands to the operation while keeping the witness reusable.
     @inlinable
     @_lifetime(borrow self, copy accumulated, copy next)
     public borrowing func callAsFunction(
@@ -43,10 +29,6 @@ public struct Append<
 
 extension Append where Failure == Never {
 
-    /// Appends one value to a heterogeneous tuple without nesting that tuple.
-    ///
-    /// This pack-based convenience uses copyable, escapable elements and cannot
-    /// fail. Use `init(appending:)` for other ownership or failure requirements.
     @inlinable
     public init<each Element>()
     where

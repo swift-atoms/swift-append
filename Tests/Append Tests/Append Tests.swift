@@ -67,7 +67,6 @@ struct `Append operates independently of parsing` {
             return accumulated + [next]
         }
 
-        // This assignment checks that calling the witness retains typed throws.
         let operation: ([Int], Int) throws(CapacityError) -> [Int] = {
             (accumulated, next) throws(CapacityError) in
             try append(accumulated, next)
