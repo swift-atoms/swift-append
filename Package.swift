@@ -6,11 +6,11 @@ let package = Package(
     products: [.library(name: "Append", targets: ["Append"])],
     targets: [
         .target(name: "Append"),
-        .testTarget(name: "Append Tests", dependencies: ["Append"]),
+        .testTarget(name: "Append Tests", dependencies: [.target(name: "Append")]),
     ],
     swiftLanguageModes: [.v6]
 )
-for target in package.targets where ![.system, .binary, .plugin].contains(target.type) {
+for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     target.swiftSettings = (target.swiftSettings ?? []) + [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),

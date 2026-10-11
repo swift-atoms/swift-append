@@ -3,7 +3,7 @@ public struct Append<
     Accumulated: ~Copyable & ~Escapable,
     Next: ~Copyable & ~Escapable,
     Output: ~Copyable & ~Escapable,
-    Failure: Swift.Error
+    Failure: Swift::Error
 > {
 
     public let appending: @_lifetime(captures, copy accumulated, copy next)
@@ -16,7 +16,14 @@ public struct Append<
     ) {
         self.appending = appending
     }
+}
 
+extension Append
+where
+    Accumulated: ~Copyable & ~Escapable,
+    Next: ~Copyable & ~Escapable,
+    Output: ~Copyable & ~Escapable
+{
     @inlinable
     @_lifetime(borrow self, copy accumulated, copy next)
     public borrowing func callAsFunction(

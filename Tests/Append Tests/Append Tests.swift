@@ -123,7 +123,7 @@ struct `Append operates independently of parsing` {
         }
     }
 
-    private enum CapacityError: Swift.Error {
+    private enum CapacityError: Swift::Error {
         case full
     }
 
